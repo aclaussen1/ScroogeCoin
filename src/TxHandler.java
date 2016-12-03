@@ -1,3 +1,10 @@
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+
 public class TxHandler {
 
     /**
@@ -5,8 +12,12 @@ public class TxHandler {
      * {@code utxoPool}. This should make a copy of utxoPool by using the UTXOPool(UTXOPool uPool)
      * constructor.
      */
+	
+	private UTXOPool pool;
+	
     public TxHandler(UTXOPool utxoPool) {
-        // IMPLEMENT THIS
+        pool=utxoPool;
+       
     }
 
     /**
@@ -19,7 +30,16 @@ public class TxHandler {
      *     values; and false otherwise.
      */
     public boolean isValidTx(Transaction tx) {
-        // IMPLEMENT THIS
+      
+    	ArrayList<Transaction.Output> outputs1 = tx.getOutputs();
+    	for (int i=0; i < outputs1.size(); i++) {
+    		Transaction.Output x = outputs1.get(i);
+    		if (x.value < 0) {
+    			return false;
+    		}
+    	}
+    	return true;
+    	
     }
 
     /**
@@ -28,7 +48,7 @@ public class TxHandler {
      * updating the current UTXO pool as appropriate.
      */
     public Transaction[] handleTxs(Transaction[] possibleTxs) {
-        // IMPLEMENT THIS
+        return possibleTxs;
     }
 
 }
