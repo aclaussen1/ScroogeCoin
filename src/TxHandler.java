@@ -32,6 +32,8 @@ public class TxHandler {
     public boolean isValidTx(Transaction tx) {
       
     	ArrayList<Transaction.Output> outputs1 = tx.getOutputs();
+    	
+    	//(4)
     	for (int i=0; i < outputs1.size(); i++) {
     		Transaction.Output x = outputs1.get(i);
     		if (x.value < 0) {
