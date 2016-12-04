@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
+import java.lang.NullPointerException;
 
 public class TxHandler {
 
@@ -32,14 +33,41 @@ public class TxHandler {
     public boolean isValidTx(Transaction tx) {
       
     	ArrayList<Transaction.Output> outputs1 = tx.getOutputs();
+    	ArrayList<Transaction.Input> inputs1 = tx.getInputs();
+    	double sumOfOutputs = 0;
+    	double sumOfInputs = 0;
+    	
+    	//(2)
+    	for (int i=0; i < inputs1.size(); i++) {
+    		Transaction.Input x = inputs1.get(i);
+    		UTXO utxo = new UTXO (x.prevTxHash,x.outputIndex);
+    		Transaction.Output output;
+    		try {
+    			output = pool.getTxOutput(utxo);
+    		} catch (NullPointerException e) {
+    			return false;
+    		}
+    		if (output != null) {
+    			sumOfInputs += output.value;
+    			if (Crypto.verifySignature(output.address, tx.getRawDataToSign(i), x.signature) == false) {
+    				return false;
+    			}
+    		}
+    	}
     	
     	//(4)
     	for (int i=0; i < outputs1.size(); i++) {
     		Transaction.Output x = outputs1.get(i);
+    		sumOfOutputs += x.value;
     		if (x.value < 0) {
     			return false;
     		}
     	}
+    	
+    	if (sumOfOutputs > sumOfInputs) {
+    		return false;
+    	}
+    	
     	return true;
     	
     }
