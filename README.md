@@ -1,6 +1,6 @@
 # ScroogeCoin
 
-This is the source for my submission for Coursera's [Introduction to Crypto and Cryptocurriences] programming assignment 1. The course was created by Princeton University's Arvind Narayanan, professor of Computer Science. I am taking this course in December 2016.
+This is the source for my submission for Coursera's [Introduction to Crypto and Cryptocurriences](http://www.coursera.org/learn/cryptocurrency) programming assignment 1. The course was created by Princeton University's Arvind Narayanan, professor of Computer Science. I am taking this course in December 2016.
 
 # The Assignment
 
