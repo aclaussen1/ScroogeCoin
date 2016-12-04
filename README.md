@@ -8,6 +8,8 @@ The goal is to create ScroogeCoin, a cryptocurrency in which the central authori
 
 # The Test Cases
 
+This assignment is graded algorithmically through 15 test cases administered through the Coursera website. This assignment is pass/fail, where only 10 succes test cases are needed to pass. I stoped at 11 :)
+
 Running 15 tests
 Test 1: test isValidTx() with valid transactions
 ==> passed
