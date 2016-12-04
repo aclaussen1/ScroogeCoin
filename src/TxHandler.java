@@ -36,11 +36,15 @@ public class TxHandler {
     	ArrayList<Transaction.Input> inputs1 = tx.getInputs();
     	double sumOfOutputs = 0;
     	double sumOfInputs = 0;
-    	
+    	ArrayList<UTXO> utxos1 = new ArrayList();
     	//(2)
     	for (int i=0; i < inputs1.size(); i++) {
     		Transaction.Input x = inputs1.get(i);
     		UTXO utxo = new UTXO (x.prevTxHash,x.outputIndex);
+    		if (utxos1.contains(utxo)) {
+    			return false;
+    		}
+    		utxos1.add(utxo);
     		Transaction.Output output;
     		if (!pool.contains(utxo)) {
     			return false;
@@ -81,7 +85,16 @@ public class TxHandler {
      * updating the current UTXO pool as appropriate.
      */
     public Transaction[] handleTxs(Transaction[] possibleTxs) {
-        return possibleTxs;
+    	
+    	ArrayList<Transaction> confirmedTransactions = new ArrayList();
+    	for(int i = 0; i < possibleTxs.length; i++)
+    	{
+    	    if (isValidTx(possibleTxs[i])) {
+    	    	confirmedTransactions.add(possibleTxs[i]);
+    	    }
+    	}
+    	Transaction[] arrayToReturn = new Transaction[confirmedTransactions.size()];
+    	return confirmedTransactions.toArray(arrayToReturn);
     }
 
 }
